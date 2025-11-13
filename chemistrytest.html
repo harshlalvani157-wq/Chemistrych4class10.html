@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1"> 
+  <title>🧪 Haloalkanes &amp; Haloarenes Quiz – Set 3</title> 
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;display=swap" rel="stylesheet"> 
+  <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+  html,body { height:100%; background: radial-gradient(circle at top,#0a0a0a,#131313); color:#fff; overflow:hidden;}
+  
+  /* ===== Welcome Screen ===== */
+  #welcome-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, #100f0f, #000);
+    color: #ff8800;
+    text-align: center;
+    z-index: 100;
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  #welcome-screen h1 {
+    font-size: 2.3rem;
+    text-shadow: 0 0 25px #ff8800;
+    margin-bottom: 10px;
+  }
+  #welcome-screen p {
+    color: #ffddaa;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+  #start-btn {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    border: none;
+    background: #ff8800;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff8800;
+    transition: 0.3s;
+  }
+  #start-btn:hover { transform: scale(1.08); background: #ffaa33; box-shadow: 0 0 30px #ffaa33; }
+  @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* ===== Quiz Design ===== */
+  .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .quiz-box {
+    width:100%; max-width:720px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border: 2px solid rgba(255,136,0,0.9);
+    border-radius:18px;
+    padding:24px;
+    box-shadow: 0 14px 50px rgba(0,0,0,0.7), 0 0 24px rgba(255,136,0,0.06) inset;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s ease;
+  }
+  .quiz-box.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+  h1 { color:#ff8800; font-size:20px; margin:0; text-shadow:0 0 10px rgba(255,136,0,0.12);}
+  .meta { color:#c9dce6; font-size:13px; }
+  .question { font-size:18px; margin:18px 0; color:#eaf9ff; }
+  .options { display:flex; flex-direction:column; gap:10px; }
+  .opt-btn {
+    background: rgba(255,255,255,0.04);
+    border:1px solid rgba(255,136,0,0.14);
+    color: #fff;
+    padding:12px 14px;
+    border-radius:12px;
+    cursor:pointer;
+    text-align:left;
+    font-size:15px;
+    transition: all 0.22s;
+  }
+  .opt-btn:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(255,136,0,0.06); }
+  .opt-btn:disabled { opacity:0.8; cursor:default; transform:none; }
+  .next-row { display:flex; justify-content:flex-end; margin-top:18px; gap:10px; }
+  .btn { padding:10px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:600; }
+  .btn-primary { background:#ff8800; color:#000; }
+  .btn-ghost { background:transparent; color:#ffddaa; border:1px solid rgba(255,255,255,0.04); }
+  .score-card { display:none; text-align:center; padding:18px; }
+  .score-big { font-size:28px; color:#ffdd55; margin-bottom:8px; }
+  .footer { margin-top:12px; color:#9fb4c9; font-size:13px; text-align:center; }
+</style> 
+ </head> 
+ <body> <!-- ===== Welcome Screen ===== --> 
+  <div id="welcome-screen"> 
+   <h1>🧪 Welcome to<br>Haloalkanes &amp; Haloarenes Quiz</h1> 
+   <p>Test your Chemistry skills ⚡<br>Createdby Dibakar</p> <button id="start-btn">Start Quiz</button> 
+  </div> <!-- ===== Quiz Section ===== --> 
+  <div class="wrap"> 
+   <div class="quiz-box" id="quizBox"> 
+    <header> 
+     <div> 
+      <h1>🧪 Haloalkanes &amp; Haloarenes – Set 3</h1> 
+      <div class="meta">
+       20 MCQs | Concept + Reaction Based
+      </div> 
+     </div> 
+     <div style="text-align:right"> 
+      <div class="meta">
+       Q <span id="qIndex">1</span>/<span id="qTotal">20</span>
+      </div> 
+      <div class="meta" style="font-size:12px; margin-top:6px">
+       Score: <span id="liveScore">0</span>
+      </div> 
+     </div> 
+    </header> 
+    <div class="question" id="question">
+     Loading...
+    </div> 
+    <div class="options" id="options"></div> 
+    <div class="next-row"> <button class="btn btn-ghost" id="skipBtn" onclick="skipQuestion()">Skip</button> <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button> 
+    </div> 
+    <div class="score-card" id="resultCard"> 
+     <div class="score-big" id="scoreText"></div> 
+     <div id="detailText" style="color:#dfeff7; margin-bottom:12px"></div> 
+     <div style="display:flex; gap:10px; justify-content:center;"> <button class="btn btn-primary" onclick="restartQuiz()">Restart</button> <button class="btn btn-ghost" onclick="reviewAnswers()">Review Answers</button> 
+     </div> 
+    </div> 
+    <div class="footer">
+     All the Best.....👍🔥 | Toppers Wallha
+    </div> 
+   </div> 
+  </div> 
+  <script>
+const questions=[
+{q:"1️⃣ Which of the following compounds is a primary alkyl halide?",o:["(CH₃)₃C–Cl","CH₃CH₂–Cl","(CH₃)₂CH–Cl","C₆H₅–CH₂–Cl"],a:1},
+{q:"2️⃣ The IUPAC name of CH₃CH(Br)CH₃ is:",o:["1-Bromopropane","2-Bromopropane","Bromopropane","Isopropyl bromide"],a:1},
+{q:"3️⃣ Which of the following is an aryl halide?",o:["C₂H₅Cl","C₆H₅Cl","CH₃Cl","CH₂Cl₂"],a:1},
+{q:"4️⃣ Which of the following does not undergo nucleophilic substitution easily?",o:["Benzyl chloride","Ethyl chloride","Chlorobenzene","Allyl chloride"],a:2},
+{q:"5️⃣ The reaction of alkyl halide + KCN → alkyl cyanide is an example of:",o:["Electrophilic substitution","Elimination","Nucleophilic substitution","Oxidation"],a:2},
+{q:"6️⃣ The hydrolysis of CH₃CH₂Br with aqueous KOH follows:",o:["SN1","SN2","E1","Free radical"],a:1},
+{q:"7️⃣ Which of the following is a dehydrohalogenation reaction?",o:[
+"C₂H₅Br + NaOH(aq) → C₂H₅OH",
+"C₂H₅Br + KOH(alc) → CH₂=CH₂",
+"C₂H₅Br + KCN → C₂H₅CN",
+"C₂H₅Br + Na → C₄H₁₀"],a:1},
+{q:"8️⃣ The reactivity order of alkyl halides towards SN1 mechanism is:",o:[
+"3° > 2° > 1° > CH₃X",
+"1° > 2° > 3° > CH₃X",
+"CH₃X > 1° > 2° > 3°",
+"2° > 3° > 1° > CH₃X"],a:0},
+{q:"9️⃣ The Wurtz reaction involves:",o:[
+"Alkyl halide + Na in dry ether → alkane",
+"Alkyl halide + NaOH(aq) → alcohol",
+"Alkyl halide + KCN → nitrile",
+"Alkyl halide + H₂ → alkane"],a:0},
+{q:"🔟 Which of the following reagents is used to prepare alkyl fluoride?",o:["HF","AgF","NaF","All of these"],a:3},
+{q:"11️⃣ Chlorobenzene on reaction with NaOH at 623 K and 300 atm gives:",o:["Benzyl alcohol","Phenol","Benzene","Benzoic acid"],a:1},
+{q:"12️⃣ Chloroform reacts with aqueous NaOH and chlorine to form:",o:["Phosgene","Carbon tetrachloride","Chloropicrin","None"],a:2},
+{q:"13️⃣ Chlorobenzene is less reactive than ethyl chloride because:",o:[
+"C–Cl bond is stronger due to resonance",
+"Chlorine is more electronegative",
+"C–Cl bond in aryl halide is longer",
+"Benzene ring destabilizes carbon"],a:0},
+{q:"14️⃣ The reagent used in Sandmeyer reaction is:",o:["CuCl / HCl","H₂ / Pt","KOH","NaOH"],a:0},
+{q:"15️⃣ In the Reimer–Tiemann reaction, the intermediate formed is:",o:["Carbene (:CH₂)","Free radical","Carbocation","Carbanion"],a:0},
+{q:"16️⃣ The compound used as an anaesthetic is:",o:["CHCl₃","CCl₄","CH₂Cl₂","CH₃Cl"],a:0},
+{q:"17️⃣ The correct order of bond strength (C–X) is:",o:[
+"C–F > C–Cl > C–Br > C–I",
+"C–I > C–Br > C–Cl > C–F",
+"C–Br > C–I > C–Cl > C–F",
+"C–F > C–I > C–Cl > C–Br"],a:0},
+{q:"18️⃣ Which of the following will give a white precipitate with AgNO₃?",o:["CH₃Cl","CH₃Br","CH₃F","CH₃OH"],a:1},
+{q:"19️⃣ The product of chlorination of methane in presence of sunlight is mainly:",o:["CH₃Cl","CH₂Cl₂","CHCl₃","CCl₄"],a:0},
+{q:"20️⃣ The compound C₆H₅CH₂Cl is called:",o:["Chlorobenzene","Benzyl chloride","Benzene chloride","Phenyl chloride"],a:1}
+];
+
+let current=0,score=0,total=questions.length;
+const qIndex=document.getElementById('qIndex'),qTotal=document.getElementById('qTotal'),liveScore=document.getElementById('liveScore');
+const question=document.getElementById('question'),options=document.getElementById('options');
+const nextBtn=document.getElementById('nextBtn'),skipBtn=document.getElementById('skipBtn');
+const resultCard=document.getElementById('resultCard'),scoreText=document.getElementById('scoreText'),detailText=document.getElementById('detailText');
+qTotal.textContent=total;
+
+function loadQuestion(){
+  const q=questions[current];
+  qIndex.textContent=current+1;
+  question.innerHTML=q.q;
+  options.innerHTML='';
+  q.o.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='opt-btn';
+    btn.innerHTML=`${String.fromCharCode(65+i)}) ${opt}`;
+    btn.onclick=()=>choose(i);
+    options.appendChild(btn);
+  });
+  nextBtn.style.display='none';skipBtn.style.display='inline-block';
+}
+function choose(index){
+  const correct=questions[current].a;
+  const buttons=options.querySelectorAll('button');
+  buttons.forEach((b,i)=>{
+    b.disabled=true;
+    if(i===correct){b.style.background='linear-gradient(90deg,#2ecc71,#1abc9c)';b.style.color='#001';}
+    if(i===index && i!==correct){b.style.background='linear-gradient(90deg,#e74c3c,#ff6b6b)';}
+  });
+  if(index===correct)score++;
+  liveScore.textContent=score;
+  nextBtn.style.display='inline-block';skipBtn.style.display='none';
+}
+function skipQuestion(){nextQuestion();}
+function nextQuestion(){current++;current<total?loadQuestion():showResult();}
+function showResult(){
+  document.querySelector('main')?.remove;
+  resultCard.style.display='block';
+  scoreText.textContent=`You scored ${score}/${total} 🎯`;
+  detailText.innerHTML=`Correct: <b>${score}</b> | Wrong/Skipped: <b>${total-score}</b>`;
+}
+function restartQuiz(){location.reload();}
+function reviewAnswers(){
+  let html="<div style='max-height:60vh;overflow:auto;text-align:left'>";
+  questions.forEach((q,i)=>{html+=`<p><b>Q${i+1}:</b> ${q.q}<br><span style='color:#aaf'>Answer:</span> ${q.o[q.a]}</p>`;});
+  html+="</div>";detailText.innerHTML=html;
+}
+
+/* ===== Welcome Screen Logic ===== */
+document.getElementById('start-btn').addEventListener('click',()=>{
+  const w=document.getElementById('welcome-screen');
+  w.style.animation='fadeOut 1.5s forwards';
+  setTimeout(()=>{
+    w.style.display='none';
+    document.querySelector('.quiz-box').classList.add('show');
+    loadQuestion();
+  },1200);
+});
+</script> 
+ </body>
+</html>
